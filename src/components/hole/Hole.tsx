@@ -1,7 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { despawnMole, whack } from "../../store/gameSlice/gameSlice";
+import { whack } from "../../store/gameSlice/gameSlice";
+import WAM_Hole from "../../assets/WAM_Hole.png"
+import WAM_Mole from "../../assets/WAM_Mole.png"
+const WAM_Hole_Image = new Image();
+WAM_Hole_Image.src = WAM_Hole;
+const WAM_Mole_Image = new Image();
+WAM_Mole_Image.src = WAM_Mole;
 
 interface HoleProps {
     x: number;
@@ -11,7 +17,6 @@ interface HoleProps {
 export const Hole: React.FC<HoleProps> = ({ x, y }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-    const [animation, setAnimation] = useState<number | null>(null);
     const moles = useSelector((state: RootState) => state.game.moles)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -20,13 +25,7 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
             ctxRef.current = canvas.getContext("2d");
         }
     }, []);
-    // useEffect(() => {
-    //     if (ctxRef.current) {
-    //         console.log("context updated");
-    //         animation && cancelAnimationFrame(animation);
-    //         setAnimation(requestAnimationFrame(drawHole))
-    //     }
-    // }, [moles, ctxRef.current])
+
 
     useEffect(() => {
         drawHole();
@@ -42,15 +41,10 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
         ctx.clearRect(0, 0, width, height);
 
         if (mole) {
-            ctx.fillStyle = "brown";
-            ctx.beginPath();
-            ctx.arc(width / 2, height / 2, 25, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.drawImage(WAM_Mole_Image, 0, 0, width, height);
         } else {
-            ctx.fillStyle = "black";
-            ctx.beginPath();
-            ctx.ellipse(width / 2, height * 0.7, 30, 10, 0, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.drawImage(WAM_Hole_Image, 0, 0, width, height);
+
         }
     };
 
@@ -63,8 +57,8 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
             <canvas
                 ref={canvasRef}
                 onClick={handleClick}
-                width={100}
-                height={100}
+                width={150}
+                height={150}
                 style={{ cursor: "pointer" }}
             />
         </div>

@@ -14,8 +14,6 @@ export const MouseCanvas = () => {
         frameHeight: 96,
         frameHeightScaled: 96
     })
-    // const [frameWidth, setFrameWidth] = useState(110);
-    // const [frameHeight, setFrameHeight] = useState(96);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -24,8 +22,6 @@ export const MouseCanvas = () => {
         ctxRef.current!.imageSmoothingEnabled = false;
         mouseImage.current.src = PA_HAMMER;
         mouseImage.current.onload = () => {
-            // setFrameWidth(mouseImage.current.width / maxFrames);
-            // setFrameHeight(mouseImage.current.height);
             setFramedData({
                 frameWidth: mouseImage.current.width / maxFrames,
                 frameWidthScaled: (mouseImage.current.width / maxFrames) * 3,
@@ -58,8 +54,8 @@ export const MouseCanvas = () => {
                 0,
                 frameData.frameWidth,
                 frameData.frameHeight,
-                x - frameData.frameWidthScaled / 2,
-                y - frameData.frameHeightScaled / 2,
+                x - frameData.frameWidthScaled / 4,
+                y - frameData.frameHeightScaled,
                 frameData.frameWidthScaled,
                 frameData.frameHeightScaled);
             frameId = requestAnimationFrame(render);
@@ -69,11 +65,11 @@ export const MouseCanvas = () => {
     }, [frameData]);
 
     useEffect(() => {
-        let frameId: number;
         const animateHammer = (frame: number = 0) => {
             const currentFrame = Math.floor(frame / 7) % maxFrames;
             const ctx = ctxRef.current;
             if (!ctx) return;
+            
             const { x, y } = mousePos.current;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.drawImage(mouseImage.current,
@@ -81,8 +77,8 @@ export const MouseCanvas = () => {
                 0,
                 frameData.frameWidth,
                 frameData.frameHeight,
-                x - frameData.frameWidthScaled / 2,
-                y - frameData.frameHeightScaled / 2,
+                x - frameData.frameWidthScaled / 4,
+                y - frameData.frameHeightScaled,
                 frameData.frameWidthScaled,
                 frameData.frameHeightScaled
             );
@@ -90,11 +86,12 @@ export const MouseCanvas = () => {
                 setAnimated(false);
                 return;
             } else {
-                frameId = requestAnimationFrame(() => animateHammer(frame + 1));
-            }
+                requestAnimationFrame(() => animateHammer(frame + 1));
+            } 
         };
-        window.addEventListener("click", () => animateHammer())
-        return () => window.removeEventListener("click", () => animateHammer())
+        const listener = () => animateHammer()
+        window.addEventListener("click", listener)
+        return () => window.removeEventListener("click", listener)
     }, [frameData]);
 
 
@@ -102,7 +99,6 @@ export const MouseCanvas = () => {
     return (
         <canvas
             ref={canvasRef}
-            // onClick={() => animateHammer()}
             width={window.innerWidth}
             height={window.innerHeight}
             style={{

@@ -4,10 +4,13 @@ import type { RootState } from "../../store/store";
 import { whack } from "../../store/gameSlice/gameSlice";
 import WAM_Hole from "../../assets/WAM_Hole.png"
 import WAM_Mole from "../../assets/WAM_Mole.png"
-const WAM_Hole_Image = new Image();
-WAM_Hole_Image.src = WAM_Hole;
-const WAM_Mole_Image = new Image();
-WAM_Mole_Image.src = WAM_Mole;
+import PA_Hole from "../../assets/PA_Hole.png"
+import PA_Mole from "../../assets/PA_Mole.png"
+
+const PA_Hole_Image = new Image();
+PA_Hole_Image.src = PA_Hole;
+const PA_Mole_Image = new Image();
+PA_Mole_Image.src = PA_Mole;
 
 interface HoleProps {
     x: number;
@@ -39,12 +42,10 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
         const height = ctx.canvas.height;
 
         ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(PA_Hole_Image, 0, 0, PA_Hole_Image.width, PA_Hole_Image.height)
 
         if (mole) {
-            ctx.drawImage(WAM_Mole_Image, 0, 0, width, height);
-        } else {
-            ctx.drawImage(WAM_Hole_Image, 0, 0, width, height);
-
+            ctx.drawImage(PA_Mole_Image, 0, 0, PA_Mole_Image.width, PA_Mole_Image.height);
         }
     };
 
@@ -57,9 +58,9 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
             <canvas
                 ref={canvasRef}
                 onClick={handleClick}
-                width={150}
-                height={150}
-                style={{ cursor: "pointer" }}
+                width={55}
+                height={55}
+                style={{ cursor: "pointer", height:"100%", width:"100%", imageRendering: "pixelated" }}
             />
         </div>
     )

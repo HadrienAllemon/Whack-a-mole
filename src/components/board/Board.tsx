@@ -41,10 +41,10 @@ export const Board = () => {
         <div>
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 150px)',
-                gridTemplateRows: 'repeat(3, 150px)',
-                rowGap: '20px',
-                columnGap: '40px',
+                gridTemplateColumns: 'repeat(4, 165px)',
+                gridTemplateRows: 'repeat(3, 165px)',
+                rowGap: '00px',
+                columnGap: '50px',
             }}>
                 {coordinates.flat().map((coord, index) => (
                     <Hole key={index} x={coord.x} y={coord.y} />

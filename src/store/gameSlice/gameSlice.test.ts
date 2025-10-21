@@ -4,6 +4,7 @@ const initialState = {
     shaking:500,
     gameover: false,
     newScore: false,
+    gameVersion: 1,
     moles: [],
     score: 0,
     running: false,

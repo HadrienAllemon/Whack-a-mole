@@ -132,7 +132,6 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
       width={55}
       height={55}
       style={{
-        cursor: "pointer",
         height: "100%",
         width: "100%",
         imageRendering: "pixelated",

@@ -15,7 +15,7 @@ export const Board = () => {
 
     useEffect(() => {
         if (running === false) return;
-        const timer = 2000 / (1 + level * 2);
+        const timer = 1500 / (1 + level * 2);
         clearInterval(spawnRateInterval.current!);
         spawnRateInterval.current = window.setInterval(() => {
             getNewMolePosition();
@@ -46,6 +46,7 @@ export const Board = () => {
                 gridTemplateRows: 'repeat(3, 165px)',
                 rowGap: '00px',
                 columnGap: '50px',
+                cursor:"none"
             }}>
                 {coordinates.flat().map((coord, index) => (
                     <Hole key={index} x={coord.x} y={coord.y} />

@@ -69,9 +69,9 @@ const gameSlice = createSlice({
             const { x, y } = action.payload;
             const moleIndex = state.moles.findIndex((m) => m.x === x && m.y === y);
             if (moleIndex === -1) return; // No mole to whack
-            state.score += 1;
+            state.score += 100;
             state.moles = state.moles.filter((m) => !(m.x === x && m.y === y));
-            if (state.score % 10 === 0) {
+            if (state.score % 1000 === 0) {
                 state.level += 1;
             }
         },

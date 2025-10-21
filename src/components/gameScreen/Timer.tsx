@@ -10,7 +10,9 @@ export const Timer = () => {
             setTimeleft((prevTime) => {
                 const newTime = Math.max(0, prevTime - 1);
                 if (newTime === 0) {
+                    clearInterval(interval);
                     dispatch(triggerGameOver(true));
+                    return 0;
                 }
                 return newTime;
             });

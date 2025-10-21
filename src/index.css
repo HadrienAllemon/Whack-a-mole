@@ -18,6 +18,16 @@
   background-color:#5500a7;
 }
 
+
+.newScoreInput{
+  display: inline-block;
+  outline:0;
+  border: none;
+  font-size: 2rem;
+  padding: 0;
+  text-decoration: none;
+}
+
 .pixelFont{
   font-family: "Pixelify Sans" , sans-serif !important;
 }
@@ -71,4 +81,16 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -21,7 +21,7 @@ export async function getHighscores() {
     }
 }
 
-export async function addHighscore(entry: any) {
+export async function addHighscore(entry: { name: string; score: number }) {
     try {
         await supabase.auth.signInWithPassword({
             email: import.meta.env.VITE_DUMMY_EMAIL,

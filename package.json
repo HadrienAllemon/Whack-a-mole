@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.1",
+    "@supabase/supabase-js": "^2.76.1",
     "park-miller": "^2.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

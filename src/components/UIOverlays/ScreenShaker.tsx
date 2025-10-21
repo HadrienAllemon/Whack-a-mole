@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, type PropsWithChildren } from "react";
-import createScreenShake from "../utils/screenshake";
+import createScreenShake from "../../utils/screenshake";
 import { useDispatch, useSelector } from "react-redux";
 import { shakeScreen } from "../../store/gameSlice/gameSlice";
 

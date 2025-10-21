@@ -18,22 +18,18 @@ export const GameScreen = () => {
         dispatch(setPage("home"));
     }
     return (
-        <>
-            <ScreenShaker>
-                <div>
-                    <Flex justifyContent={"space-between"} marginBottom="20px" >
-                        <Heading size={"5xl"} className="pixelFont gameText">Score: {score}</Heading>
-                        <Heading size={"5xl"} className="pixelFont gameText"><Timer /></Heading>
-                        <Heading size={"5xl"} className="pixelFont gameText">Level: {level}</Heading>
-                    </Flex>
-                    <Board />
-                    <MouseCanvas />
-                    <Flex justifyContent={"space-around"} marginTop="20px">
-                        <Button size="2xl" fontSize="2xl" onClick={handleExit}>Back</Button>
-                        <Button size="2xl" fontSize="2xl" onClick={() => dispatch(reset())}>Restart</Button>
-                    </Flex>
-                </div>
-            </ScreenShaker>
-        </>
+        <div>
+            <Flex justifyContent={"space-between"} marginBottom="20px" >
+                <Heading size={"5xl"} className="pixelFont gameText">Score: {score}</Heading>
+                <Heading size={"5xl"} className="pixelFont gameText"><Timer /></Heading>
+                <Heading size={"5xl"} className="pixelFont gameText">Level: {level}</Heading>
+            </Flex>
+            <Board />
+            <MouseCanvas />
+            <Flex justifyContent={"space-around"} marginTop="20px">
+                <Button size="2xl" fontSize="2xl" onClick={handleExit}>Back</Button>
+                <Button size="2xl" fontSize="2xl" onClick={() => dispatch(reset())}>Restart</Button>
+            </Flex>
+        </div>
     )
 }

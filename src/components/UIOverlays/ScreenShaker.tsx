@@ -1,54 +1,44 @@
-import { useRef, useState, useEffect, type PropsWithChildren } from "react";
+import { useEffect, useRef, type PropsWithChildren } from "react";
 import createScreenShake from "../../utils/screenshake";
-import { useDispatch, useSelector } from "react-redux";
-import { shakeScreen } from "../../store/gameSlice/gameSlice";
-import type { RootState } from "../../store/store";
+import { on } from "../../events/eventBus";
 
 export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
+  const shake = useRef(createScreenShake({ maxOffsetX: 250, maxOffsetY: 250, maxAngle: 15 }));
+  const divRef = useRef<HTMLDivElement>(null);
 
-    const shake = useRef(createScreenShake({ maxOffsetX: 250, maxOffsetY: 250, maxAngle: 15 }));
-    const shaking = useSelector((state: RootState) => state.game.shaking);
-    const dispatch = useDispatch();
-    const [shakeTransform, setShakeTransform] = useState({ x: 0, y: 0, r: 0 });
+  useEffect(() => {
+    let frameId: number;
+    const loop = (time: number) => {
+      const { offsetX, offsetY, angle } = shake.current.update(time);
+      const el = divRef.current;
+      if (el) el.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg)`;
+      frameId = requestAnimationFrame(loop);
+    };
+    frameId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
-    useEffect(() => {
-        let frameId: number;
-        const loop = (time: number) => {
-            const { offsetX, offsetY, angle } = shake.current.update(time);
-            setShakeTransform({ x: offsetX, y: offsetY, r: angle });
-            frameId = requestAnimationFrame(loop);
-        };
-        loop(0);
-        return () => cancelAnimationFrame(frameId);
-    }, []);
+  useEffect(() => {
+    const unsubscribe = on("whack", () => {
+      shake.current.add(0.5);
+    });
+    return unsubscribe;
+  }, []);
 
-    const triggerShake = () => shake.current.add(0.5);
-    useEffect(() => {
-        if (shaking) {
-            triggerShake();
-            setTimeout(() => {
-                dispatch(shakeScreen(false));
-            }, 500);
-        }
-    }, [shaking]);
-
-    return (
-        <div
-            className="shaker"
-            style={{
-                transform: `translate(${shakeTransform.x}px, ${shakeTransform.y}px) rotate(${shakeTransform.r}deg)`,
-                transition: "transform 0.05s linear",
-                position:"absolute",
-                top:0,
-                left:0,
-                height:"100%",
-                width:"100%",
-                display:"flex",
-                justifyContent:"center",
-                alignItems:"center",
-            }}
-        >
-            {children}
-        </div>
-    );
-}
+  return (
+    <div
+      ref={divRef}
+      className="shaker"
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        transition: "transform 0.05s linear",
+      }}
+    >
+      {children}
+    </div>
+  );
+};

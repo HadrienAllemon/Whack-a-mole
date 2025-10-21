@@ -12,7 +12,6 @@ interface Coordinate {
 }
 
 interface GameState {
-    shaking:boolean;
     moles: Mole[];
     score: number;
     running: boolean;
@@ -26,7 +25,6 @@ const initialState: GameState = {
     moles: [],
     score: 0,
     running: false,
-    shaking:false,
     level:1,
     gameover:false,
     newScore:false,
@@ -57,10 +55,6 @@ const gameSlice = createSlice({
             state.gameover = false;
             state.score = 0;
             state.level = 1;
-        },
-        shakeScreen(state, action: PayloadAction<boolean>) {
-            state.shaking = action.payload;
-
         },
         
         spawnMole(state, action: PayloadAction<{ x: number; y: number }>) {
@@ -96,4 +90,4 @@ const gameSlice = createSlice({
 });
 
 export default gameSlice.reducer;
-export const { start, spawnMole, despawnMole, whack, shakeScreen, reset, exitGame, triggerGameOver, triggerNewScore } = gameSlice.actions;
+export const { start, spawnMole, despawnMole, whack, reset, exitGame, triggerGameOver, triggerNewScore } = gameSlice.actions;

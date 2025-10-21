@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import PA_HAMMER from "../../assets/PA_HAMMER.png";
-import { useDispatch, useSelector } from "react-redux";
-import { shakeScreen } from "../../store/gameSlice/gameSlice";
-import type { RootState } from "../../store/store";
+import { emit } from "../../events/eventBus";
 
 export const MouseCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-    const running = useSelector((state: RootState) => state.game.running);
     const mouseImage = useRef(new Image());
     const mousePos = useRef({ x: 0, y: 0 });
     const [animated, setAnimated] = useState(false);
-    const maxFrames = import.meta?.env?.VITE_MAX_HAMMER_FRAMES  ?? 7;
-    const dispatch = useDispatch();
+    const maxFrames = import.meta?.env?.VITE_MAX_HAMMER_FRAMES ?? 7;
     const [frameData, setFramedData] = useState({
         frameWidth: 110,
         frameWidthScaled: 110,
@@ -72,10 +68,10 @@ export const MouseCanvas = () => {
     useEffect(() => {
         const animateHammer = (frame: number = 0) => {
             const currentFrame = Math.floor(frame / 7) % maxFrames;
-            if (currentFrame === 0 && running) dispatch(shakeScreen(true));
+            ;
             const ctx = ctxRef.current;
             if (!ctx) return;
-            
+
             const { x, y } = mousePos.current;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.drawImage(mouseImage.current,
@@ -93,9 +89,12 @@ export const MouseCanvas = () => {
                 return;
             } else {
                 requestAnimationFrame(() => animateHammer(frame + 1));
-            } 
+            }
         };
-        const listener = () => animateHammer()
+        const listener = () => {
+            emit("whack");
+            animateHammer();
+        }
         window.addEventListener("click", listener)
         return () => window.removeEventListener("click", listener)
     }, [frameData, ctxRef.current]);

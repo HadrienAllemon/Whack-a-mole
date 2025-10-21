@@ -4,13 +4,19 @@
   font-weight: 400;
   font-family: "Pixelify Sans" , sans-serif !important;
   color-scheme: light dark;
-  background-color: white;
-  background-image: url(./assets/WAM_bg.jpg);
+  background-color: black;
+
   color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.shaker{
+  background-image: url(./assets/bg.png);
+  background-size: contain;
+  image-rendering: pixelated;
 }
 
 .chakra-button{

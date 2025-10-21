@@ -9,7 +9,7 @@ function App() {
   const page = useSelector((state: RootState) => state.pageTracker.currentPage);
 
   return (
-    <div>
+    <div >
       <HighScoreOverlay />
       <GameOverOverlay/>
       {page === "home" ?

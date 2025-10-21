@@ -6,7 +6,7 @@ import type { RootState } from "../../store/store";
 
 export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
 
-    const shake = useRef(createScreenShake({maxOffsetX:250, maxOffsetY:250, maxAngle:15}));
+    const shake = useRef(createScreenShake({ maxOffsetX: 250, maxOffsetY: 250, maxAngle: 15 }));
     const shaking = useSelector((state: RootState) => state.game.shaking);
     const dispatch = useDispatch();
     const [shakeTransform, setShakeTransform] = useState({ x: 0, y: 0, r: 0 });
@@ -34,9 +34,15 @@ export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <div
+            className="shaker"
             style={{
                 transform: `translate(${shakeTransform.x}px, ${shakeTransform.y}px) rotate(${shakeTransform.r}deg)`,
                 transition: "transform 0.05s linear",
+                position:"absolute",
+                top:0,
+                left:0,
+                height:"100%",
+                width:"100%",
             }}
         >
             {children}

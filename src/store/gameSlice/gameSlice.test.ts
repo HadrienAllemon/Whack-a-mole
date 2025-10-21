@@ -1,6 +1,7 @@
 import gameReducer, { spawnMole, whack, despawnMole } from './gameSlice';
 
 const initialState = {
+    shaking:false,
     moles: [],
     score: 0,
     running: false,

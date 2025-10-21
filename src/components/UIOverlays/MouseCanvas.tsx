@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PA_HAMMER from "../../assets/PA_HAMMER.png";
+import { useDispatch } from "react-redux";
+import { shakeScreen } from "../../store/gameSlice/gameSlice";
 
 export const MouseCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +9,8 @@ export const MouseCanvas = () => {
     const mouseImage = useRef(new Image());
     const mousePos = useRef({ x: 0, y: 0 });
     const [animated, setAnimated] = useState(false);
-    const maxFrames = import.meta.env.VITE_MAX_HAMMER_FRAMES || 9;
+    const maxFrames = import.meta?.env?.VITE_MAX_HAMMER_FRAMES  ?? 9;
+    const dispatch = useDispatch();
     const [frameData, setFramedData] = useState({
         frameWidth: 110,
         frameWidthScaled: 110,
@@ -17,7 +20,7 @@ export const MouseCanvas = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas) return;
+        if (!canvas || !ctxRef.current) return;
         ctxRef.current = canvas.getContext("2d");
         ctxRef.current!.imageSmoothingEnabled = false;
         mouseImage.current.src = PA_HAMMER;
@@ -54,8 +57,8 @@ export const MouseCanvas = () => {
                 0,
                 frameData.frameWidth,
                 frameData.frameHeight,
-                x - frameData.frameWidthScaled / 4,
-                y - frameData.frameHeightScaled,
+                x - frameData.frameWidthScaled / 3,
+                y - frameData.frameHeightScaled / 1,
                 frameData.frameWidthScaled,
                 frameData.frameHeightScaled);
             frameId = requestAnimationFrame(render);
@@ -67,6 +70,7 @@ export const MouseCanvas = () => {
     useEffect(() => {
         const animateHammer = (frame: number = 0) => {
             const currentFrame = Math.floor(frame / 7) % maxFrames;
+            if (currentFrame === 0) dispatch(shakeScreen(true));
             const ctx = ctxRef.current;
             if (!ctx) return;
             
@@ -77,8 +81,8 @@ export const MouseCanvas = () => {
                 0,
                 frameData.frameWidth,
                 frameData.frameHeight,
-                x - frameData.frameWidthScaled / 4,
-                y - frameData.frameHeightScaled,
+                x - frameData.frameWidthScaled / 3,
+                y - frameData.frameHeightScaled / 1,
                 frameData.frameWidthScaled,
                 frameData.frameHeightScaled
             );
@@ -101,6 +105,7 @@ export const MouseCanvas = () => {
             ref={canvasRef}
             width={window.innerWidth}
             height={window.innerHeight}
+            role="canvas"
             style={{
                 position: "absolute",
                 top: 0,

@@ -1,13 +1,16 @@
 import './App.css'
 import { Board } from './components/board/Board.tsx'
-import { MouseCanvas } from './components/mouseCanvas/MouseCanvas.tsx'
+import { MouseCanvas } from './components/UIOverlays/MouseCanvas.tsx'
+import { ScreenShaker } from './components/UIOverlays/ScreenShaker.tsx'
 function App() {
 
   return (
     <>
       <div>
-        <MouseCanvas/>
-        <Board />
+        <MouseCanvas />
+        <ScreenShaker>
+          <Board />
+        </ScreenShaker>
       </div>
 
     </>

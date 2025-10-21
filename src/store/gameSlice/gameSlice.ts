@@ -12,6 +12,7 @@ interface Coordinate {
 }
 
 interface GameState {
+    shaking:boolean;
     moles: Mole[];
     score: number;
     running: boolean;
@@ -23,6 +24,7 @@ const initialState: GameState = {
     moles: [],
     score: 0,
     running: false,
+    shaking:false,
     level:1,
     coordinates: Array.from({ length: 3 }, (_, row) => {
         return Array.from({ length: 4 }, (_, col) => {
@@ -35,21 +37,14 @@ const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        // handleMoleSpawn(state) {
-        //     const getNewMolePosition = () => {
-        //         const emptyHoles = state.coordinates.flat().filter(coord =>
-        //             !state.moles.some(mole => mole.x === coord.x && mole.y === coord.y)
-        //         );
-        //         if (emptyHoles.length === 0) return;
-        //         const randomIndex = Math.floor(Math.random() * emptyHoles.length);
-        //         const { x, y } = emptyHoles[randomIndex];
-        //         state.moles.push({ x, y, visible: true });
-        //         setTimeout(getNewMolePosition, 1000);
-        //     }
-        // },
         start(state) {
             state.running = true;
             state.score = 0;            
+        },
+        shakeScreen(state, action: PayloadAction<boolean>) {
+            console.log("Setting shaking to ", action.payload);
+            state.shaking = action.payload;
+
         },
         
         spawnMole(state, action: PayloadAction<{ x: number; y: number }>) {
@@ -75,4 +70,4 @@ const gameSlice = createSlice({
 });
 
 export default gameSlice.reducer;
-export const { start, spawnMole, despawnMole, whack } = gameSlice.actions;
+export const { start, spawnMole, despawnMole, whack, shakeScreen } = gameSlice.actions;

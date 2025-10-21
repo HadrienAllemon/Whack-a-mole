@@ -13,6 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.chakra-button{
+  font-family: "Pixelify Sans" , sans-serif !important;
+  background-color:#5500a7;
+}
+
 .pixelFont{
   font-family: "Pixelify Sans" , sans-serif !important;
 }

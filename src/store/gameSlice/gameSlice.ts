@@ -16,8 +16,9 @@ interface GameState {
     moles: Mole[];
     score: number;
     running: boolean;
-    coordinates: Coordinate[][];
     level: number;
+    gameover: boolean;
+    coordinates: Coordinate[][];
 }
 
 const initialState: GameState = {
@@ -26,6 +27,7 @@ const initialState: GameState = {
     running: false,
     shaking:false,
     level:1,
+    gameover:false,
     coordinates: Array.from({ length: 3 }, (_, row) => {
         return Array.from({ length: 4 }, (_, col) => {
             return { x: row, y: col }
@@ -45,10 +47,12 @@ const gameSlice = createSlice({
             state.moles = [];
             state.score = 0;
             state.level = 1;
+            state.gameover = false;
         },
         exitGame(state) {
             state.running = false;
             state.moles = [];
+            state.gameover = false;
             state.score = 0;
             state.level = 1;
         },
@@ -75,8 +79,13 @@ const gameSlice = createSlice({
                 state.level += 1;
             }
         },
+        triggerGameOver(state, action: PayloadAction<boolean>) {
+            state.gameover = action.payload;
+            state.running = false;
+            state.moles = [];
+        }
     },
 });
 
 export default gameSlice.reducer;
-export const { start, spawnMole, despawnMole, whack, shakeScreen, reset, exitGame } = gameSlice.actions;
+export const { start, spawnMole, despawnMole, whack, shakeScreen, reset, exitGame, triggerGameOver } = gameSlice.actions;

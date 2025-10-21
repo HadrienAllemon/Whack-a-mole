@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Button, Flex, Heading } from "@chakra-ui/react";
 import { setPage } from "../../store/pageSlice/pageSlice";
 import { reset, exitGame } from "../../store/gameSlice/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +28,9 @@ export const GameScreen = () => {
                 <Board />
             </ScreenShaker>
             <MouseCanvas />
-            <Flex justifyContent={"space-between"} marginTop="20px">
-                <button onClick={handleExit}>Back</button>
-                <button onClick={() => dispatch(reset())}>Restart</button>
+            <Flex justifyContent={"space-around"} marginTop="20px">
+                <Button size="2xl" fontSize="2xl" onClick={handleExit}>Back</Button>
+                <Button size="2xl" fontSize="2xl" onClick={() => dispatch(reset())}>Restart</Button>
             </Flex>
         </>
     )

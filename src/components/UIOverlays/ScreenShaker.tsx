@@ -43,6 +43,9 @@ export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
                 left:0,
                 height:"100%",
                 width:"100%",
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center",
             }}
         >
             {children}

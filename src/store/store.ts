@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameReducer from "./gameSlice/gameSlice";
+import pageReducer from "./pageSlice/pageSlice";
 export const store = configureStore({
     reducer: {
-        game: gameReducer
+        game: gameReducer,
+        pageTracker:pageReducer
     }
 });
 

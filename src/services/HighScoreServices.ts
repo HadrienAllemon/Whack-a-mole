@@ -1,13 +1,8 @@
-import fs from "fs/promises";
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = 'https://qonbttcfwhymrikmuxdg.supabase.co'
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
-
-const FILE_PATH = "highscores.json"
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export async function getHighscores() {
     try {

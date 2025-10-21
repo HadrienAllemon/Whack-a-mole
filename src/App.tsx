@@ -1,28 +1,24 @@
+import { useSelector } from 'react-redux'
 import './App.css'
 import { Board } from './components/board/Board.tsx'
+import { HomePage } from './components/homePage/HomePage.tsx'
 import { MouseCanvas } from './components/UIOverlays/MouseCanvas.tsx'
 import { ScreenShaker } from './components/UIOverlays/ScreenShaker.tsx'
-import { addHighscore, getHighscores } from './services/HighScoreServices.ts'
+import type { RootState } from './store/store.ts'
 function App() {
-  // getHighscores().then((scores) => {
-  //   console.log("Highscores:", scores);
-  // })
-  return (
-    <>
+  const page = useSelector((state: RootState) => state.pageTracker.currentPage);
+  if (page === 'home') {
+    return <HomePage />
+  } else {
+    return (
       <div>
-        <button onClick={async () => {
-          const scores = await addHighscore({ name: "Player1", score: Math.floor(Math.random() * 1000) });
-          console.log("Highscores:", scores);
-        }
-        }>Add Random Highscore</button>
         <MouseCanvas />
         <ScreenShaker>
           <Board />
         </ScreenShaker>
       </div>
-
-    </>
-  )
+    )
+  }
 }
 
 export default App

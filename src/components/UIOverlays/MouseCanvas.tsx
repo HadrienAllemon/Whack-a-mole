@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import PA_HAMMER from "../../assets/PA_HAMMER.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { shakeScreen } from "../../store/gameSlice/gameSlice";
+import type { RootState } from "../../store/store";
 
 export const MouseCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const running = useSelector((state: RootState) => state.game.running);
     const mouseImage = useRef(new Image());
     const mousePos = useRef({ x: 0, y: 0 });
     const [animated, setAnimated] = useState(false);
@@ -70,7 +72,7 @@ export const MouseCanvas = () => {
     useEffect(() => {
         const animateHammer = (frame: number = 0) => {
             const currentFrame = Math.floor(frame / 7) % maxFrames;
-            if (currentFrame === 0) dispatch(shakeScreen(true));
+            if (currentFrame === 0 && running) dispatch(shakeScreen(true));
             const ctx = ctxRef.current;
             if (!ctx) return;
             

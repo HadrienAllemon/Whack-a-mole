@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.28.0",
     "@reduxjs/toolkit": "^2.9.1",
     "@supabase/supabase-js": "^2.76.1",
     "park-miller": "^2.0.1",

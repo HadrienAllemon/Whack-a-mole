@@ -2,11 +2,12 @@ import { useRef, useState, useEffect, type PropsWithChildren } from "react";
 import createScreenShake from "../../utils/screenshake";
 import { useDispatch, useSelector } from "react-redux";
 import { shakeScreen } from "../../store/gameSlice/gameSlice";
+import type { RootState } from "../../store/store";
 
 export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
 
     const shake = useRef(createScreenShake({maxOffsetX:250, maxOffsetY:250, maxAngle:15}));
-    const shaking = useSelector((state: any) => state.game.shaking);
+    const shaking = useSelector((state: RootState) => state.game.shaking);
     const dispatch = useDispatch();
     const [shakeTransform, setShakeTransform] = useState({ x: 0, y: 0, r: 0 });
 

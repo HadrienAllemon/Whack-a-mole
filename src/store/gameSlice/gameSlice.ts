@@ -41,6 +41,17 @@ const gameSlice = createSlice({
             state.running = true;
             state.score = 0;            
         },
+        reset(state) {
+            state.moles = [];
+            state.score = 0;
+            state.level = 1;
+        },
+        exitGame(state) {
+            state.running = false;
+            state.moles = [];
+            state.score = 0;
+            state.level = 1;
+        },
         shakeScreen(state, action: PayloadAction<boolean>) {
             state.shaking = action.payload;
 
@@ -68,4 +79,4 @@ const gameSlice = createSlice({
 });
 
 export default gameSlice.reducer;
-export const { start, spawnMole, despawnMole, whack, shakeScreen } = gameSlice.actions;
+export const { start, spawnMole, despawnMole, whack, shakeScreen, reset, exitGame } = gameSlice.actions;

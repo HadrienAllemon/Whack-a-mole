@@ -48,6 +48,7 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
   useEffect(() => {
     const mole = moles.find((m) => m.x === x && m.y === y);
     if (mole && holeState === "inactive") setHoleState("spawning");
+    if (!mole && holeState !== "inactive" && holeState !== "hit") setHoleState("inactive");
   }, [moles]);
 
   const animateSprite = useCallback(
@@ -79,7 +80,7 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
       );
 
       if (frame < (frameCount - 1) * speedOffset) return frame + 1;
-      if (nextState !== "inactive") dispatch(despawnMole({ x, y }));  
+      if (nextState === "inactive") dispatch(despawnMole({ x, y }));  
       setHoleState(nextState);
       return 0;
     },

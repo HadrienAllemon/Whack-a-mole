@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Board } from "../board/Board";
 import type { RootState } from "../../store/store";
 import { MouseCanvas } from "../UIOverlays/MouseCanvas";
-import { ScreenShaker } from "../UIOverlays/ScreenShaker";
 import { Timer } from "./Timer";
 
 export const GameScreen = () => {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { triggerGameOver } from "../../store/gameSlice/gameSlice";
 
 export const Timer = () => {
-    const [timeLeft, setTimeleft] = useState(10); 
+    const [timeLeft, setTimeleft] = useState(30); 
     const dispatch = useDispatch();
     useEffect(() => {
         const interval = setInterval(() => {

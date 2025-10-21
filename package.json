@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.28.0",
@@ -35,6 +36,7 @@
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
+    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "jest-environment-jsdom": "^30.2.0",
     "jsdom": "^27.0.1",

@@ -56,6 +56,7 @@ export const HighScoreOverlay = () => {
     const backToTitle = () => {
         dispatch(toggleHighScores());
         dispatch(setPage("home"));
+        dispatch(triggerNewScore(false));
         setNewScoreName("");
     }
 

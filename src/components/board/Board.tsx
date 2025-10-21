@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Hole } from "../hole/Hole"
-import { spawnMole, reset, exitGame } from "../../store/gameSlice/gameSlice";
+import { spawnMole } from "../../store/gameSlice/gameSlice";
 import type { RootState } from "../../store/store";
 import { useCallback, useEffect, useRef } from "react";
-import { Flex } from "@chakra-ui/react";
-import { setPage } from "../../store/pageSlice/pageSlice";
+
 
 export const Board = () => {
     const moles = useSelector((state: RootState) => state.game.moles)
@@ -39,15 +38,6 @@ export const Board = () => {
         dispatch(spawnMole({ x, y }));
     }, [coordinates, moles, dispatch]);
 
-    const handleExit = () => {
-        dispatch(exitGame());
-        dispatch(setPage("home"));
-    }
-
-   
-
-    
-
     return (
         <div>
             <div style={{
@@ -61,10 +51,6 @@ export const Board = () => {
                     <Hole key={index} x={coord.x} y={coord.y} />
                 ))}
             </div>
-            <Flex justifyContent={"space-between"} marginTop="20px">
-                <button onClick={handleExit}>Back</button>
-                <button onClick={() => dispatch(reset())}>Restart</button>
-            </Flex>
         </div >
     )
 }

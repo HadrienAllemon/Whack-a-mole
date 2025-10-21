@@ -9,7 +9,7 @@ export const MouseCanvas = () => {
     const mouseImage = useRef(new Image());
     const mousePos = useRef({ x: 0, y: 0 });
     const [animated, setAnimated] = useState(false);
-    const maxFrames = import.meta?.env?.VITE_MAX_HAMMER_FRAMES  ?? 9;
+    const maxFrames = import.meta?.env?.VITE_MAX_HAMMER_FRAMES  ?? 7;
     const dispatch = useDispatch();
     const [frameData, setFramedData] = useState({
         frameWidth: 110,
@@ -20,7 +20,7 @@ export const MouseCanvas = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !ctxRef.current) return;
+        if (!canvas) return;
         ctxRef.current = canvas.getContext("2d");
         ctxRef.current!.imageSmoothingEnabled = false;
         mouseImage.current.src = PA_HAMMER;
@@ -65,7 +65,7 @@ export const MouseCanvas = () => {
         };
         render();
         return () => cancelAnimationFrame(frameId);
-    }, [frameData]);
+    }, [frameData, ctxRef.current]);
 
     useEffect(() => {
         const animateHammer = (frame: number = 0) => {
@@ -96,7 +96,7 @@ export const MouseCanvas = () => {
         const listener = () => animateHammer()
         window.addEventListener("click", listener)
         return () => window.removeEventListener("click", listener)
-    }, [frameData]);
+    }, [frameData, ctxRef.current]);
 
 
 
@@ -106,6 +106,7 @@ export const MouseCanvas = () => {
             width={window.innerWidth}
             height={window.innerHeight}
             role="canvas"
+            id="mouse-canvas"
             style={{
                 position: "absolute",
                 top: 0,

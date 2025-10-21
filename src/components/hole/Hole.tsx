@@ -6,6 +6,7 @@ import PA_Hole from "../../assets/PA_Hole.png";
 import PA_Mole_Spawn from "../../assets/PA_Mole.png";
 import PA_Mole_Idle from "../../assets/PA_Mole_Idle.png";
 import PA_Mole_Exit from "../../assets/PA_Mole_Exit.png";
+import PA_Mole_Whacked from "../../assets/PA_Mole_Whacked.png";
 
 interface HoleProps {
   x: number;
@@ -26,6 +27,7 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
     spawning: new Image(),
     idle: new Image(),
     leaving: new Image(),
+    whacked: new Image(),
   });
 
   const [holeState, setHoleState] = useState<HoleState>("inactive");
@@ -36,6 +38,7 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
     sprites.current.spawning.src = PA_Mole_Spawn;
     sprites.current.idle.src = PA_Mole_Idle;
     sprites.current.leaving.src = PA_Mole_Exit;
+    sprites.current.whacked.src = PA_Mole_Whacked;
 
     const canvas = canvasRef.current;
     if (canvas) ctxRef.current = canvas.getContext("2d");
@@ -96,6 +99,8 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
         frame = animateSprite(sprites.current.idle, 7, "leaving", frame, 20);
       } else if (holeState === "leaving") {
         frame = animateSprite(sprites.current.leaving, 6, "inactive", frame, 7);
+      } else if (holeState === "hit") {
+        frame = animateSprite(sprites.current.whacked, 19, "inactive", frame, 10);
       }
 
       currentAnimation.current = requestAnimationFrame(() => animationHandler(frame));
@@ -112,7 +117,12 @@ export const Hole: React.FC<HoleProps> = ({ x, y }) => {
     };
   }, [animationHandler]);
 
-  const handleClick = () => dispatch(whack({ x, y }));
+  const handleClick = () => {
+    if (holeState === "spawning" || holeState == "idle" || holeState == "leaving" ) {
+      setHoleState("hit");
+      dispatch(whack({ x, y }));
+    }
+  }
 
   return (
     <canvas

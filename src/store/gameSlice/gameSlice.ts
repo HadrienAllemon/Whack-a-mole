@@ -42,7 +42,6 @@ const gameSlice = createSlice({
             state.score = 0;            
         },
         shakeScreen(state, action: PayloadAction<boolean>) {
-            console.log("Setting shaking to ", action.payload);
             state.shaking = action.payload;
 
         },
@@ -63,7 +62,6 @@ const gameSlice = createSlice({
             state.moles = state.moles.filter((m) => !(m.x === x && m.y === y));
             if (state.score % 10 === 0) {
                 state.level += 1;
-                console.log("Level Up!, you are now level " + state.level);
             }
         },
     },

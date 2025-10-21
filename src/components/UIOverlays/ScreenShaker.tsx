@@ -23,7 +23,6 @@ export const ScreenShaker: React.FC<PropsWithChildren> = ({ children }) => {
 
     const triggerShake = () => shake.current.add(0.5);
     useEffect(() => {
-        console.log("Shaking:", shaking);
         if (shaking) {
             triggerShake();
             setTimeout(() => {

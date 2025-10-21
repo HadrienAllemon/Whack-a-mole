@@ -21,7 +21,10 @@ export const HighScoreOverlay = () => {
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-        getHighscores().then(setScores).catch(console.error);
+        getHighscores().then((_scores)=>{
+            _scores = _scores.sort((a,b)=>b.score - a.score);
+            setScores(_scores || []);
+        }).catch(console.error);
     }, []);
 
     const newHighScore = () => {

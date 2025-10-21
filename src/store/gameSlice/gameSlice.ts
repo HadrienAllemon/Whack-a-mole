@@ -14,6 +14,7 @@ interface Coordinate {
 interface GameState {
     moles: Mole[];
     score: number;
+    gameVersion: number;
     running: boolean;
     level: number;
     gameover: boolean;
@@ -24,6 +25,7 @@ interface GameState {
 const initialState: GameState = {
     moles: [],
     score: 0,
+    gameVersion: 1,
     running: false,
     level:1,
     gameover:false,
@@ -48,6 +50,7 @@ const gameSlice = createSlice({
             state.score = 0;
             state.level = 1;
             state.gameover = false;
+            state.gameVersion += 1;
         },
         exitGame(state) {
             state.running = false;

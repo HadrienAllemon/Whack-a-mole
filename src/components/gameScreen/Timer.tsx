@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { triggerGameOver } from "../../store/gameSlice/gameSlice";
+import type { RootState } from "../../store/store";
 
 export const Timer = () => {
     const [timeLeft, setTimeleft] = useState(30); 
+    const gameVersion = useSelector((state: RootState) => state.game.gameVersion);
     const dispatch = useDispatch();
     useEffect(() => {
         const interval = setInterval(() => {
@@ -20,5 +22,8 @@ export const Timer = () => {
 
         return () => clearInterval(interval);
     }, []);
-    return <div>{timeLeft}s</div>;
+    useEffect(() => {
+        setTimeleft(30);
+    }, [gameVersion]);
+    return <div key={gameVersion}>{timeLeft}s</div>;
 }
